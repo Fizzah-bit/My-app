@@ -1,102 +1,82 @@
-<h1>If Else Condition Control Flow</h1>
+<h1>Basic of Reactive Forms</h1>
 
-@if (x == 20) {
-  <div style="width: 200px; height: 200px; background-color: green;"></div>
-} @else {
-  <div style="width: 200px; height: 200px; background-color: red;"></div>
+<form>
+  <input type="text" placeholder="Enter Name" [formControl]="name">
+  <br><br>
+
+  <input type="password" placeholder="Password" [formControl]="password">
+  <br><br>
+
+ <button type="button" (click)="Login()">Login</button>
+
+  <h3>Name: {{ name.value }}</h3>
+  <h3>Password: {{ password.value }}</h3>
+</form>
+
+<h1>Form Grouping in Reactive Forms</h1>
+
+<form [formGroup]="profileForm" (ngSubmit)="Submit()">
+  <input type="text" placeholder="Enter Name" formControlName="name">
+  <br><br>
+
+  <input type="text" placeholder="Enter Email" formControlName="email">
+  <br><br>
+
+  <input type="password" placeholder="Enter Password" formControlName="password">
+  <br><br>
+
+  <button type="submit">Submit</button>
+</form>
+
+
+<h1>Templete Derver Forms</h1>
+
+<form #userForm="ngForm" (ngSubmit)="addDetail(userForm.value)">
+  <input type="text" placeholder="Enter name" name="name" ngModel>
+  <br><br>
+
+  <input type="password" placeholder="Password" name="password" ngModel>
+  <br><br>
+
+  <select name="gender" ngModel>
+    <option value="">Select gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+  <br><br>
+
+  <input type="range" min="0" max="20" name="range" ngModel>
+  <br><br>
+
+  <button type="submit">Add user</button>
+</form>
+
+
+
+
+
+<h1 style="background-color: chartreuse;">Pass data to chlid component to parent component Tuseday</h1>
+<app-user  [user]="selectedUser.value"></app-user>
+
+<select #selectedUser>
+  <option value="fizzo">fizzo</option>
+  <option value="shiza">shiza</option>
+  <option value="Mryam">Mryam</option>
+</select>
+
+
+<h1>Reuse component</h1>
+
+@for (user of users; track user) {
+  <div>{{ user }}</div>
 }
 
-<br /><br />
+<h1 style="background-color: blue;">Pipes in Anguler Thursday</h1>
 
-<h1 style="background-color: blue;">Switch Case in Angular</h1>
-<button (click)="HandleColor('red')">Red</button>
-<button (click)="HandleColor('green')">Green</button>
-<button (click)="HandleColor('blue')">Blue</button>
-@switch (color) {
-  @case ('red') {
-    <h2 style="background-color: red;">Red Color</h2>
-  }
-  @case ('green') {
-    <h2 style="background-color: green;">Green Color</h2>
-  }
-  @case ('blue') {
-    <h2 style="background-color: blue;">Blue Color</h2>
-  }
-  @default {
-    <h2>No Color Selected</h2>
-  }
-}
-
-
-
-
-
-<h1 class="color" id="change"> color change</h1>
-
-
-
-<h1>Loop Example</h1>
-
-<ul>
-  @for (fruit of fruits; track $index) {
-    <li>
-      {{ $index + 1 }} - {{ fruit }}
-    </li>
-  }
-</ul>
-<h1>Angular 19 Signals Example</h1>
-
-<h2>Counter Value: {{ counter() }}</h2>
-
-<button (click)="increment()">Increment</button>
-<button (click)="decrement()">Decrement</button>
-<button (click)="reset()">Reset</button>
-
-
-
-<h1>Two way Data Binding</h1>
-<input type="text" [(ngModel)]="username" placeholder="Enter your name" />
-
-<p>You entered: {{ username }}</p>
-
-<h1>Angular To-Do List</h1>
-
-
-<input type="text"[(ngModel)]="task" placeholder="new task">
-<button (click)="addtask()">add task</button>
-<h1>{{task}}</h1>
-
-@for(task of tasklist;track task.id){
-
-  <ul class="task-list">
-    <li>{{task.id}}</li>x
-     <li>{{task.task}}</li>
-      <li><button (click)="Deletetask(task.id)">Delete</button></li>
-  </ul>
-}
-
-
-<h1> Basic Dynamic Style</h1>
-
-<h2 [style.color]="'blue'">This text is always Blue</h2>
-<h2 [ngStyle]="{'background-color': 'yellow', 'font-size': '24px'}">
-  This text has multiple dynamic styles
-</h2>
-
-
-<h1>Dynamic Style with Condition</h1>
-<h2 [style.color]="isActive ? 'green' : 'red'">
-  Text changes color dynamically
-</h2>
-
-
-<h1>Dynamic Style with Button Click (Event)</h1>
-
-<h2 [style.backgroundColor]="boxColor">
-  Box with Dynamic Background
-</h2>
-
-<button (click)="changeColor('lightblue')">Blue</button>
-<button (click)="changeColor('lightgreen')">Green</button>
-<button (click)="changeColor('lightcoral')">Red</button>
-
+<h1>{{Title | uppercase}}</h1>
+<h1>{{Title | lowercase}}</h1>
+<h1>{{name1 |uppercase}}</h1>
+<h1>{{name1 |lowercase}}</h1>
+<h1>{{today|date}}</h1>
+<h1>login screen</h1>
+<app-login></app-login>

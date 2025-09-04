@@ -1,67 +1,58 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';   // 👈 for @if, @for, etc
-import { FormsModule } from '@angular/forms';     // 👈 for [(ngModel)]
+import { FormControl, FormGroup, FormsModule, NgForm } from '@angular/forms';     // 👈 for [(ngModel)]
+import { ReactiveFormsModule } from '@angular/forms';
+import { User } from './user/user';
+import { CommonModule, CurrencyPipe } from '@angular/common'; 
+import { LoginComponent } from './login/login';
+
+
 
 @Component({
   selector: 'app-root',
-  standalone: true,   // 👈 standalone confirm
-  imports: [CommonModule, FormsModule],  // 👈 Required imports
+  standalone: true,
+  imports: [
+    FormsModule,
+   ReactiveFormsModule,
+   User,
+ CommonModule,
+ LoginComponent
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class App {
   protected readonly title = signal('my-app1');
 
-  display = true;
-  x = 20;
-  color = 'blue';
+ name = new FormControl('');
+  password = new FormControl('');
+ Login() {
+    console.log("Name:", this.name.value);
+    console.log("Password:", this.password.value);
+  }
+//grouping 
+ profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl('')
+  });
 
-  fruits = ['Apple', 'Banana', 'Mango', 'Orange', 'Grapes'];
-
-  HandleColor(val: string) {
-    this.color = val;
+  // Submit function
+  Submit() {
+    console.log(this.profileForm.value);
   }
 
-  // Signal banana
-  counter = signal(0);
-
-  // Signal update karne ke liye methods
-  increment() {
-    this.counter.update(value => value + 1);
+  addDetail(val:NgForm){
+    console.log(val);
   }
-
-  decrement() {
-    this.counter.update(value => value - 1);
-  }
-
-  reset() {
-    this.counter.set(0);
-  }
-
-  // Two way binding ke liye properties
-  username: string = '';
+//Tuseday
 
 
+users: string[] = ['anil', 'peter', 'sam'];
 
+//thursday
+Title='Code step by srep';
+name1='Fizzah irshad';
+ today = new Date();
 
-
-  task="";
-tasklist:{id:number,task:string}[]=[]
- addtask(){
-  this.tasklist.push({id:this.tasklist.length+1,task:this.task})
-  console.log(this.tasklist)
- }
-
-Deletetask(taskid:number){
-  this.tasklist=this.tasklist.filter((item)=>taskid !=taskid);
-
-}
-
-isActive = false;
- boxColor: string = 'lightgray';
-
-  // Method to change color on button click
-  changeColor(color: string) {
-    this.boxColor = color;
-  }
+ 
 }
