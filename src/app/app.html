@@ -1,82 +1,33 @@
-<h1>Basic of Reactive Forms</h1>
+<h1 style="background-color: greenyellow">Data type with API</h1>
 
-<form>
-  <input type="text" placeholder="Enter Name" [formControl]="name">
+<h1>All datatype in anguler :bolaen :string:number:etc</h1>
+<h1 style="background-color: blue;">API call services monday and tuseday </h1>
+
+
+<form #userform="ngForm" (ngSubmit)="adduser(userform.value)">
+    <input type="text" placeholder="Enter name" name="name" [(ngModel)]="selectedUser.name">
   <br><br>
-
-  <input type="password" placeholder="Password" [formControl]="password">
+  <input type="text" placeholder="Enter email" name="email" [(ngModel)]="selectedUser.email">
   <br><br>
-
- <button type="button" (click)="Login()">Login</button>
-
-  <h3>Name: {{ name.value }}</h3>
-  <h3>Password: {{ password.value }}</h3>
+  <input type="text" placeholder="Enter age" name="age" [(ngModel)]="selectedUser.age">
+  <br><br>
+     <button type="submit">
+    {{ selectedUser.id ? "Update User" : "Add User" }}
+  </button>
 </form>
 
-<h1>Form Grouping in Reactive Forms</h1>
-
-<form [formGroup]="profileForm" (ngSubmit)="Submit()">
-  <input type="text" placeholder="Enter Name" formControlName="name">
-  <br><br>
-
-  <input type="text" placeholder="Enter Email" formControlName="email">
-  <br><br>
-
-  <input type="password" placeholder="Enter Password" formControlName="password">
-  <br><br>
-
-  <button type="submit">Submit</button>
-</form>
-
-
-<h1>Templete Derver Forms</h1>
-
-<form #userForm="ngForm" (ngSubmit)="addDetail(userForm.value)">
-  <input type="text" placeholder="Enter name" name="name" ngModel>
-  <br><br>
-
-  <input type="password" placeholder="Password" name="password" ngModel>
-  <br><br>
-
-  <select name="gender" ngModel>
-    <option value="">Select gender</option>
-    <option value="Male">Male</option>
-    <option value="Female">Female</option>
-  </select>
-  <br><br>
-
-  <input type="range" min="0" max="20" name="range" ngModel>
-  <br><br>
-
-  <button type="submit">Add user</button>
-</form>
-
-
-
-
-
-<h1 style="background-color: chartreuse;">Pass data to chlid component to parent component Tuseday</h1>
-<app-user  [user]="selectedUser.value"></app-user>
-
-<select #selectedUser>
-  <option value="fizzo">fizzo</option>
-  <option value="shiza">shiza</option>
-  <option value="Mryam">Mryam</option>
-</select>
-
-
-<h1>Reuse component</h1>
-
-@for (user of users; track user) {
-  <div>{{ user }}</div>
+@for(user of users;track user.id){
+    <ul>
+        <li>{{user.name}}</li>
+        <li>{{user.email}}</li>
+        <li>{{user.age}}</li>
+        <li><button (click)="deleteUser(user.id)">Delete</button></li>
+         <li><button (click)="selectUser(user.id)">update user</button></li>
+    </ul>
 }
+ 
 
-<h1 style="background-color: blue;">Pipes in Anguler Thursday</h1>
-
-<h1>{{Title | uppercase}}</h1>
-<h1>{{Title | lowercase}}</h1>
-<h1>{{name1 |uppercase}}</h1>
-<h1>{{name1 |lowercase}}</h1>
-<h1>{{today|date}}</h1>
-<h1>login screen</h1>
-<app-login></app-login>
+<h1 style="background-color: chocolate;">Route lazy loading tuseday</h1>
+<a routerLink="/admin">Go to admin page</a>
+<router-outlet></router-outlet>
+<h1 style="background-color: aqua;">Build and Local Deploy</h1>

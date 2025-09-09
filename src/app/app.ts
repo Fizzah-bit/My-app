@@ -1,58 +1,57 @@
-import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NgForm } from '@angular/forms';     // 👈 for [(ngModel)]
-import { ReactiveFormsModule } from '@angular/forms';
-import { User } from './user/user';
-import { CommonModule, CurrencyPipe } from '@angular/common'; 
-import { LoginComponent } from './login/login';
-
-
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { UserService } from './services/user.service';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    FormsModule,
-   ReactiveFormsModule,
-   User,
- CommonModule,
- LoginComponent
-  ],
+  imports: [CommonModule, FormsModule,RouterOutlet,RouterLink],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']
 })
-export class App {
-  protected readonly title = signal('my-app1');
+export class App implements OnInit {
+  users: any[] = [];
+selectedUser: any = {};
+  constructor(private userService: UserService) {}
 
- name = new FormControl('');
-  password = new FormControl('');
- Login() {
-    console.log("Name:", this.name.value);
-    console.log("Password:", this.password.value);
+  ngOnInit() {
+    // Component load hote hi API se data le aayega
+    this.userService.getUsers().subscribe((data) => {
+      console.log('API Data:', data);
+      this.users = data;
+    });
   }
-//grouping 
- profileForm = new FormGroup({
-    name: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl('')
+
+  adduser(formValue: any) {
+    console.log('Form data:', formValue);
+
+    this.userService.addUser(formValue).subscribe((res) => {
+      console.log('User Added:', res);
+      this.users.push(res); // API response ko list me dikhana
+    });
+  }
+deleteUser(id: string) {
+  console.log('Deleting User with ID:', id);
+
+  this.userService.deleteUser(id).subscribe((res) => {
+    console.log('User Deleted:', res);
+    this.users = this.users.filter((u) => u.id !== id);
   });
-
-  // Submit function
-  Submit() {
-    console.log(this.profileForm.value);
-  }
-
-  addDetail(val:NgForm){
-    console.log(val);
-  }
-//Tuseday
-
-
-users: string[] = ['anil', 'peter', 'sam'];
-
-//thursday
-Title='Code step by srep';
-name1='Fizzah irshad';
- today = new Date();
-
- 
 }
+selectUser(id: string) {
+  console.log('user with ID for update:', id);
+
+  this.userService.getselectuser(id).subscribe((res) => {
+    console.log('User selected for update:', res);
+    this.selectedUser = { ...res };
+  });
+}
+updateUser(){this.userService.updateUser('1', { name: 'Updated Name', email: 'test@test.com' })
+  .subscribe(response => {
+    console.log('User updated:', response);
+  });
+}
+
+}
+
